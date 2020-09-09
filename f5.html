@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SK미래관 길찾기</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="jquery.ui.all.css" />
+
+    <script type="text/javascript" src="raphael-min.js"></script>
+    <script type="text/javascript" src="es5-shim.min.js"></script>
+    <script type="text/javascript" src="jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="state-machine.min.js"></script>
+    <script type="text/javascript" src="async.min.js"></script>
+
+    <script type="text/javascript" src="jquery.ui.core.min.js"></script>
+    <script type="text/javascript" src="jquery.ui.widget.min.js"></script>
+    <script type="text/javascript" src="jquery.ui.mouse.min.js"></script>
+    <script type="text/javascript" src="jquery.ui.draggable.min.js"></script>
+    <script type="text/javascript" src="jquery.ui.accordion.min.js"></script>
+    <script type="text/javascript" src="jquery.ui.slider.min.js"></script>
+
+    <script type="text/javascript" src="pathfinding-browser.min.js"></script>
+
+    <script
+      src="https://kit.fontawesome.com/3e3fb6f6f4.js"
+      crossorigin="anonymous"
+    ></script>
+    <script type="text/javascript" src="blockarray.js"></script>
+    <script type="text/javascript" src="view.js"></script>
+    <script type="text/javascript" src="f5controller.js"></script>
+    <script type="text/javascript" src="panel.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+    <script src="jquery.ui.touch-punch.min.js"></script>
+    <style>
+      #draw_area {
+        background-image: url("5층.jpg");
+        background-size: contain;
+        background-repeat: no-repeat;
+        position: absolute;
+        height: 700px;
+      }
+      #bt6 {
+        border-color: black;
+      }
+      #instructions_panel {
+        display: none;
+      }
+    </style>
+    <script src="button.js" defer></script>
+  </head>
+  <body>
+    <div id="draw_area"></div>
+
+    <div id="shadow"></div>
+    <div class="set_point">
+      <i id="x" class="fas fa-times-circle"></i>
+      <div id="startp"><b>시작점으로 설정</b></div>
+      <div id="endp"><b>도착점으로 설정</b></div>
+    </div>
+
+    <div id="search_panel">
+      <i id="si" class="fas fa-search"></i>
+      <input id="name" type="text" placeholder=" 호실 입력  ex)  522" />
+      <span id="Search_bt">Search</span>
+    </div>
+
+    <span id="show_panel">Instructions</span>
+    <div id="instructions_panel" class="panel">
+      <nav class="navbar">
+        <i class="fas fa-eject"></i>
+        <p id="ttle">SK미래관 길찾기</p>
+      </nav>
+
+      <div id="intro">
+        <header>
+          <h2 id="ht" class="header_title">Instructions <br /></h2>
+        </header>
+        고려대학교
+        <strong style="color: salmon">SK 미래관 길찾기 서비스</strong>
+        입니다.<br />
+        1. 원하는 구역을 클릭하여 <span class="green">출발지</span> 혹은
+        <span class="red">도착지</span>를 지정할 수 있습니다. <br />
+        2. 검색창에 찾는 목적지의 호실을 입력하세요. <br />
+        &nbsp;&nbsp;&nbsp;<b>Enter</b>를 누르거나 <b>Search</b> 버튼을 클릭하면
+        해당 목적지가 도착지로 설정됩니다.<br />
+        3. 우측 하단의 <b>START SEARCH</b> 버튼을 클릭하면 최단 경로 찾기가
+        시작됩니다.
+      </div>
+      <span id="hide_instructions"><b>지도 보기</b></span>
+    </div>
+
+    <div id="algorithm_panel" class="panel right_panel">
+      <header><h2 class="header_title">Select Algorithm</h2></header>
+
+      <div class="accordion">
+        <h3 id="astar_header"><a href="#">A*</a></h3>
+        <div id="astar_section" class="finder_section">
+          <header class="option_header">
+            <h3>Heuristic</h3>
+          </header>
+          <div id="astar_heuristic" class="sub_options">
+            <input
+              type="radio"
+              name="astar_heuristic"
+              value="manhattan"
+              checked
+            />
+            <label class="option_label">Manhattan</label> <br />
+            <input type="radio" name="astar_heuristic" value="euclidean" />
+            <label class="option_label">Euclidean</label> <br />
+            <input type="radio" name="astar_heuristic" value="octile" />
+            <label class="option_label">Octile</label> <br />
+            <input type="radio" name="astar_heuristic" value="chebyshev" />
+            <label class="option_label">Chebyshev</label> <br />
+          </div>
+
+          <header class="option_header">
+            <h3>Options</h3>
+          </header>
+          <div class="optional sub_options">
+            <input type="checkbox" class="allow_diagonal" checked />
+            <label class="option_label">Allow Diagonal</label> <br />
+            <input type="checkbox" class="bi-directional" />
+            <label class="option_label">Bi-directional</label> <br />
+            <input type="checkbox" class="dont_cross_corners" />
+            <label class="option_label">Don't Cross Corners</label> <br />
+            <input class="spinner" name="astar_weight" value="1" />
+            <label class="option_label">Weight</label> <br />
+          </div>
+        </div>
+
+        <h3 id="ida_header"><a href="#">IDA*</a></h3>
+        <div id="ida_section" class="finder_section">
+          <header class="option_header">
+            <h3>Heuristic</h3>
+          </header>
+          <div id="ida_heuristic" class="sub_options">
+            <input
+              type="radio"
+              name="ida_heuristic"
+              value="manhattan"
+              checked
+            />
+            <label class="option_label">Manhattan</label> <br />
+            <input type="radio" name="ida_heuristic" value="euclidean" />
+            <label class="option_label">Euclidean</label> <br />
+            <input type="radio" name="ida_heuristic" value="octile" />
+            <label class="option_label">Octile</label> <br />
+            <input type="radio" name="ida_heuristic" value="chebyshev" />
+            <label class="option_label">Chebyshev</label> <br />
+          </div>
+          <header class="option_header">
+            <h3>Options</h3>
+          </header>
+          <div class="optional sub_options">
+            <input type="checkbox" class="allow_diagonal" checked />
+            <label class="option_label">Allow Diagonal</label> <br />
+            <input type="checkbox" class="dont_cross_corners" />
+            <label class="option_label">Don't Cross Corners</label> <br />
+            <input class="spinner" name="astar_weight" value="1" />
+            <label class="option_label">Weight</label> <br />
+            <input class="spinner" name="time_limit" value="10" />
+            <label class="option_label">Seconds limit</label> <br />
+            <input type="checkbox" class="track_recursion" checked />
+            <label class="option_label">Visualize recursion</label> <br />
+          </div>
+        </div>
+
+        <h3 id="breadthfirst_header"><a href="#">Breadth-First-Search</a></h3>
+        <div id="breadthfirst_section" class="finder_section">
+          <header class="option_header">
+            <h3>Options</h3>
+          </header>
+          <div class="optional sub_options">
+            <input type="checkbox" class="allow_diagonal" checked />
+            <label class="option_label">Allow Diagonal</label> <br />
+            <input type="checkbox" class="bi-directional" />
+            <label class="option_label">Bi-directional</label> <br />
+            <input type="checkbox" class="dont_cross_corners" />
+            <label class="option_label">Don't Cross Corners</label> <br />
+          </div>
+        </div>
+
+        <h3 id="bestfirst_header"><a href="#">Best-First-Search</a></h3>
+        <div id="bestfirst_section" class="finder_section">
+          <header class="option_header">
+            <h3>Heuristic</h3>
+          </header>
+          <div id="bestfirst_heuristic" class="sub_options">
+            <input
+              type="radio"
+              name="bestfirst_heuristic"
+              value="manhattan"
+              checked
+            />
+            <label class="option_label">Manhattan</label> <br />
+            <input type="radio" name="bestfirst_heuristic" value="euclidean" />
+            <label class="option_label">Euclidean</label> <br />
+            <input type="radio" name="bestfirst_heuristic" value="octile" />
+            <label class="option_label">Octile</label> <br />
+            <input type="radio" name="bestfirst_heuristic" value="chebyshev" />
+            <label class="option_label">Chebyshev</label> <br />
+          </div>
+
+          <header class="option_header">
+            <h3>Options</h3>
+          </header>
+          <div class="optional sub_options">
+            <input type="checkbox" class="allow_diagonal" checked />
+            <label class="option_label">Allow Diagonal</label> <br />
+            <input type="checkbox" class="bi-directional" />
+            <label class="option_label">Bi-directional</label> <br />
+            <input type="checkbox" class="dont_cross_corners" />
+            <label class="option_label">Don't Cross Corners</label> <br />
+          </div>
+        </div>
+
+        <h3 id="dijkstra_header"><a href="#">Dijkstra</a></h3>
+        <div id="dijkstra_section" class="finder_section">
+          <header class="option_header">
+            <h3>Options</h3>
+          </header>
+          <div class="optional sub_options">
+            <input type="checkbox" class="allow_diagonal" checked />
+            <label class="option_label">Allow Diagonal</label> <br />
+            <input type="checkbox" class="bi-directional" />
+            <label class="option_label">Bi-directional</label> <br />
+            <input type="checkbox" class="dont_cross_corners" />
+            <label class="option_label">Don't Cross Corners</label> <br />
+          </div>
+        </div>
+
+        <h3 id="jump_point_header"><a href="#">Jump Point Search</a></h3>
+        <div id="jump_point_section" class="finder_section">
+          <header class="option_header">
+            <h3>Heuristic</h3>
+          </header>
+          <div id="jump_point_heuristic" class="sub_options">
+            <input
+              type="radio"
+              name="jump_point_heuristic"
+              value="manhattan"
+              checked
+            />
+            <label class="option_label">Manhattan</label> <br />
+            <input type="radio" name="jump_point_heuristic" value="euclidean" />
+            <label class="option_label">Euclidean</label> <br />
+            <input type="radio" name="jump_point_heuristic" value="octile" />
+            <label class="option_label">Octile</label> <br />
+            <input type="radio" name="jump_point_heuristic" value="chebyshev" />
+            <label class="option_label">Chebyshev</label> <br />
+          </div>
+          <header class="option_header">
+            <h3>Options</h3>
+          </header>
+          <div class="optional sub_options">
+            <input type="checkbox" class="track_recursion" checked />
+            <label class="option_label">Visualize recursion</label> <br />
+          </div>
+        </div>
+
+        <h3 id="orth_jump_point_header">
+          <a href="#">Orthogonal Jump Point Search</a>
+        </h3>
+        <div id="orth_jump_point_section" class="finder_section">
+          <header class="option_header">
+            <h3>Heuristic</h3>
+          </header>
+          <div id="orth_jump_point_heuristic" class="sub_options">
+            <input
+              type="radio"
+              name="orth_jump_point_heuristic"
+              value="manhattan"
+              checked
+            />
+            <label class="option_label">Manhattan</label> <br />
+            <input
+              type="radio"
+              name="orth_jump_point_heuristic"
+              value="euclidean"
+            />
+            <label class="option_label">Euclidean</label> <br />
+            <input
+              type="radio"
+              name="orth_jump_point_heuristic"
+              value="octile"
+            />
+            <label class="option_label">Octile</label> <br />
+            <input
+              type="radio"
+              name="orth_jump_point_heuristic"
+              value="chebyshev"
+            />
+            <label class="option_label">Chebyshev</label> <br />
+          </div>
+          <header class="option_header">
+            <h3>Options</h3>
+          </header>
+          <div class="optional sub_options">
+            <input type="checkbox" class="track_recursion" checked />
+            <label class="option_label">Visualize recursion</label> <br />
+          </div>
+        </div>
+      </div>
+      <!-- .accordion -->
+    </div>
+    <!-- #algorithm_panel -->
+
+    <div id="play_panel" class="panel right_panel">
+      <button id="button1" class="control_button">Start Search</button>
+      <button id="button2" class="control_button">Pause Search</button>
+      <button id="button3" class="control_button">Clear Walls</button>
+    </div>
+    <div class="button">
+      <a id="bt1" href="b1.html">b1</a>
+      <a id="bt2" href="f1.html">1층</a>
+      <a id="bt3" href="f2.html">2층</a>
+      <a id="bt4" href="f3.html">3층</a>
+      <a id="bt5" href="f4.html">4층</a>
+      <a id="bt6" href="f5.html">5층</a>
+    </div>
+    <div id="stats"></div>
+
+    <!--<footer>
+      Project Hosted on
+      <a href="http://github.com/qiao/PathFinding.js">Github</a>
+    </footer>-->
+  </body>
+</html>

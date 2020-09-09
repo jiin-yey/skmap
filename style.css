@@ -1,0 +1,429 @@
+body {
+  padding: 0px;
+  margin: 0px;
+  overflow: hidden;
+}
+html {
+  margin: 0px;
+}
+input {
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0px;
+  padding: 0px;
+  font-weight: normal;
+}
+
+.header_title {
+  font-size: 120%;
+  font-weight: bold;
+  padding-bottom: 5px;
+  margin-top: -10px;
+}
+
+.panel {
+  position: fixed;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border-radius: 8px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  cursor: default;
+}
+
+.right_panel {
+  width: 80px;
+  right: 20px;
+}
+
+#algorithm_panel {
+  right: 20px;
+  top: 20px;
+}
+
+#instructions_panel {
+  top: 20px;
+  left: 20px;
+  width: 550px;
+}
+
+#hide_instructions {
+  position: absolute;
+  right: 25px;
+  top: 10px;
+  font-size: 90%;
+  cursor: pointer;
+}
+
+#hide_instruction:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.option_header {
+  font-size: 80%;
+  margin-left: 20px;
+}
+
+.option_label {
+  cursor: pointer;
+}
+
+button {
+  border: none;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 5px;
+  font-size: 90%;
+  cursor: pointer;
+  padding: 2px 8px;
+  margin: 0 2%;
+  width: 28%;
+}
+
+button:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.finder_section {
+  border: solid 1px #ddd;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.sub_options {
+  padding: 2px;
+  font-size: 14px;
+  margin: 2px 30px 0;
+}
+
+#stats {
+  position: fixed;
+  bottom: 40px;
+  left: 35px;
+  color: #0a0;
+  font-size: 85%;
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0.8;
+  border-radius: 5px;
+}
+
+a {
+  color: #33f;
+}
+
+footer {
+  color: #333;
+  font-size: 70%;
+  text-align: center;
+  position: fixed;
+  width: 200px;
+  bottom: 10px;
+  left: 50%;
+  margin-left: -100px;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 5px;
+  border-radius: 5px;
+  opacity: 0.8;
+}
+
+.white {
+  color: #fff;
+}
+
+.spinner {
+  width: 2em;
+}
+
+rect {
+  opacity: 0.3;
+}
+
+#algorithm_panel {
+  display: none;
+}
+
+.button {
+  display: flex;
+  position: absolute;
+  margin: 5px;
+}
+
+#bt1,
+#bt2,
+#bt3,
+#bt4,
+#bt5,
+#bt6 {
+  text-decoration: none;
+  color: black;
+  margin: 1px;
+  text-align: center;
+  width: 25px;
+  padding: 4px 6px;
+  border-radius: 8px;
+  border: solid white 2px;
+}
+
+#bt1:hover,
+#bt2:hover,
+#bt3:hover,
+#bt4:hover,
+#bt5:hover,
+#bt6:hover {
+  border: solid yellow 2px;
+}
+
+#bt1 {
+  background-color: #c89ec4;
+}
+
+#bt2 {
+  background-color: #ff7473;
+}
+
+#bt3 {
+  background-color: #ffc952;
+}
+
+#bt4 {
+  background-color: #a5d296;
+}
+
+#bt5 {
+  background-color: #47b8e0;
+}
+
+#bt6 {
+  background-color: #ddd;
+}
+
+#button1 {
+  background-color: #cff09e;
+}
+
+#button2 {
+  background-color: #79bd9a;
+}
+
+#button3 {
+  background-color: #3b8686;
+}
+
+#instructions_panel {
+  margin: 30px;
+  margin-top: 50px;
+}
+
+#play_panel {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  width: 70px;
+  align-items: center;
+  left: 590px;
+}
+
+.control_button {
+  width: 70px;
+  margin: 5px;
+}
+
+#instructions_panel {
+  left: 0px;
+  top: 0px;
+  z-index: 3;
+  margin: 0px;
+  background-image: url("koreauniv.jpg");
+  background-size: 100vh;
+  border-radius: 0;
+  width: 660px;
+  height: 100vh;
+}
+
+#ht {
+  font-size: large;
+  line-height: 260%;
+}
+#intro {
+  background-color: black;
+  padding: 30px 35px;
+  padding-left: 50px;
+  border-radius: 8px;
+  opacity: 0.7;
+  position: relative;
+  top: 25%;
+  font-size: small;
+  line-height: 190%;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+}
+
+.navbar {
+  left: 0px;
+  top: 0px;
+  margin: 0px;
+  position: absolute;
+  top: 0px;
+  width: 676px;
+  height: 25px;
+  display: flex;
+  background-color: #1c203d;
+  padding: 8px 12px;
+}
+
+.navbar i {
+  color: #ef9e9f;
+  padding-left: 2px;
+  padding-top: 3px;
+  padding-right: 8px;
+}
+
+#ttle {
+  margin: 0px;
+}
+
+#hide_instructions {
+  position: absolute;
+  top: 490px;
+  left: 290px;
+  padding: 10px;
+  background-color: #ff7473;
+  width: 100px;
+  text-align: center;
+  border-radius: 6px;
+  color: black;
+}
+
+#show_panel {
+  background-color: black;
+  padding: 3px 7px;
+  display: flex;
+  position: absolute;
+  margin: 10px;
+  left: 574px;
+  border-radius: 4px;
+  opacity: 0.5;
+  color: white;
+  cursor: pointer;
+}
+
+#search_panel {
+  display: flex;
+  position: absolute;
+  margin-left: 10px;
+  margin-top: 50px;
+}
+
+::placeholder {
+  color: grey;
+  font-style: italic;
+}
+
+#Search_bt {
+  background-color: black;
+  opacity: 0.5;
+  color: white;
+  font-size: 15px;
+  padding: 3px;
+  border-radius: 2px;
+  margin-left: 2px;
+  margin-right: 0;
+  cursor: pointer;
+}
+
+#si {
+  color: white;
+  border-radius: 2px;
+  padding-top: 6px;
+  padding-right: 6px;
+  padding-left: 6px;
+  margin-right: 1px;
+  background-color: black;
+  opacity: 0.5;
+}
+
+.set_point {
+  background-color: white;
+  color: white;
+  display: none;
+  position: absolute;
+  width: 200px;
+  height: 110px;
+  top: 50%;
+  left: 320px;
+  margin: -50px 0 0 -50px;
+  flex-direction: column;
+  opacity: 0.95;
+  border-radius: 6px;
+  align-content: center;
+  z-index: 2;
+  box-shadow: 2px 2px 50px black;
+}
+
+#startp,
+#endp {
+  text-align: center;
+  padding: 5px;
+  background-color: #ff7473;
+  color: black;
+  margin: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 2px;
+  cursor: pointer;
+  box-shadow: 1px 1px 2px;
+}
+
+#shadow {
+  background-color: black;
+  display: none;
+  position: absolute;
+  width: 700px;
+  height: 800px;
+  opacity: 0.4;
+  z-index: 1;
+}
+
+#x {
+  color: black;
+  opacity: 0.5;
+  margin-left: 180px;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.green {
+  color: #0d0;
+  opacity: 0.9;
+}
+
+.red {
+  color: #ff9166;
+  opacity: 0.9;
+}
+
+@media screen and (max-width: 768px) {
+  #instructions_panel {
+    background-image: url("phone.jpg");
+    background-size: 100vw;
+    background-repeat: no-repeat;
+    justify-content: center;
+  }
+
+  #intro {
+    position: relative;
+    width: 100vw;
+  }
+}
