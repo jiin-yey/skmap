@@ -420,10 +420,14 @@ rect {
     background-size: 100vw;
     background-repeat: no-repeat;
     justify-content: center;
+    align-content: center;
+    height: 700px;
   }
 
   #intro {
-    position: relative;
+    position: absolute;
     width: 100vw;
+    margin-left: 5vw;
+    margin-right: 5vw;
   }
 }
